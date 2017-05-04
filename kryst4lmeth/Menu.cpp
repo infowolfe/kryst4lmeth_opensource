@@ -1107,7 +1107,7 @@ namespace Menu
 					// AntiAimOptions Start
 					{
 						AntiAimOptions->AddChild(new CCombobox(XorStr("Pitch Preset"), XorStr("Vertical anti-aim"), std::vector<std::string>{XorStr("None"), XorStr("Down"), XorStr("Emotion"), XorStr("FakeDown"), XorStr("FakeAngel"), XorStr("Rotary"), XorStr("Rand")}, &Config.g_iAntiAim_Pitch));
-						AntiAimOptions->AddChild(new CCombobox(XorStr("Yaw Preset"), XorStr("Horizontal anti-aim"), std::vector<std::string>{XorStr("None"), XorStr("Backward"), XorStr("FakeBackward"), XorStr("Jitter"), XorStr("BackJitter"), XorStr("JitterSynced"), XorStr("Sideways"), XorStr("FakeSideways"), XorStr("FakeForward"), XorStr("SlowSpin"), XorStr("FastSpin"), XorStr("Rand"), XorStr("FakeSideSpin"), XorStr("AngelBackwardsTrusted"), XorStr("AngelInverseTrusted"), XorStr("AngelSidewaysTrusted")}, &Config.g_iAntiAim_Yaw));
+						AntiAimOptions->AddChild(new CCombobox(XorStr("Yaw Preset"), XorStr("Horizontal anti-aim"), std::vector<std::string>{XorStr("None"), XorStr("Backward"), XorStr("FakeBackward"), XorStr("Jitter"), XorStr("BackJitter"), XorStr("JitterSynced"), XorStr("Sideways"), XorStr("FakeSideways"), XorStr("FakeForward"), XorStr("SlowSpin"), XorStr("FastSpin"), XorStr("Rand"), XorStr("FakeSideSpin")}, &Config.g_iAntiAim_Yaw));
 						AntiAimOptions->AddChild(new CCombobox(XorStr("Yaw Direction"), XorStr("Change anti-aim orientation"), std::vector<std::string>{XorStr("Relative"), XorStr("Absolute"), XorStr("At Target")}, &Config.g_iAntiAim_Direction));
 						AntiAimOptions->AddChild(new CToggleVisibilityCheckbox(XorStr("Override Angles"), XorStr("Use custom angles"), &Config.g_bAntiAim_OverrideAngles, AngleOptions));
 					}
