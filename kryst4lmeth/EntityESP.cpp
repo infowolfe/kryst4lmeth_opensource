@@ -250,7 +250,6 @@ void EntityESP::RenderName()
         Interfaces::Engine()->GetPlayerInfo(m_pEntity->EntIndex(), &pInfo);
 		DrawStringOutlined(Font[FONT_ESP], Vector2D(vScreenOrigin.x, vScreenOrigin.y + distoffset - 11), SourceColor, 3, pInfo.szName);
 		DrawStringOutlined(Font[FONT_ESP], Vector2D(vScreenOrigin.x, vScreenOrigin.y + distoffset), SourceColor, 3, std::to_string(EnemyHealth).c_str());
-		//DrawStringOutlined(Font[FONT_ESP], Vector2D(vScreenOrigin.x, vScreenOrigin.y + distoffset + 11), SourceColor, 3, std::to_string(m_pEntity->GetPoseParameter()).c_str());
     }
 }
 
