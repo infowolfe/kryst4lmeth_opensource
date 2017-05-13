@@ -30,8 +30,6 @@ float AutoWall::ScaleDamage(int Hitgroup, C_CSPlayer *pEntity, float weapon_armo
 
 bool AutoWall::HandleBulletPenetration(float WeaponPenetration, surfacedata_t* EnterSurfaceData, surfacedata_t* ExitSurfaceData, trace_t& Trace, float Thickness, int &HitsLeft, float& CurrentDamage)
 {
-	// what the fuck, the thickness gets stuck at multiples of 4
-	Thickness = max(Thickness - 2.0f, 0);	// Compensate for imprecision
 	if (!EnterSurfaceData || !ExitSurfaceData) { return true; }
 	short EnterMaterial = EnterSurfaceData->game.material;
 	short ExitMaterial = ExitSurfaceData->game.material;
@@ -132,11 +130,11 @@ float AutoWall::SimulateFireBullet(Vector StartPos, Vector Point, int* HitGroup)
 				Vector Dummy;
 				if (!Utils::TraceToExit(Dummy, EnterTrace, EnterTrace.endpos, Direction, &Result)) { break; }
 				Damage *= pow(WpnData->m_flRangeModifier, CurrentLength * 0.002);
-				if (Result.startpos.IsValid() && EnterTrace.endpos.IsValid())
+				if (Result.endpos.IsValid() && EnterTrace.endpos.IsValid())
 				{
-					surfacedata_t* EnterSurfaceData = Interfaces::PhysProps()->GetSurfaceData(EnterTrace.surface.surfaceProps);
-					surfacedata_t* ExitSurfaceData = Interfaces::PhysProps()->GetSurfaceData(Result.surface.surfaceProps);
-					float Thickness = EnterTrace.endpos.DistTo(Result.startpos);
+					surfacedata_t* EnterSurfaceData = Interfaces::PhysProps->GetSurfaceData(EnterTrace.surface.surfaceProps);
+					surfacedata_t* ExitSurfaceData = Interfaces::PhysProps->GetSurfaceData(Result.surface.surfaceProps);
+					float Thickness = (EnterTrace.endpos - Result.endpos).Length();
 					if (AutoWall::HandleBulletPenetration(WpnData->m_flPenetration, EnterSurfaceData, ExitSurfaceData, Result, Thickness, PenetrationCount, Damage)) { break; }
 				}
 				else { break; }
