@@ -132,8 +132,8 @@ float AutoWall::SimulateFireBullet(Vector StartPos, Vector Point, int* HitGroup)
 				Damage *= pow(WpnData->m_flRangeModifier, CurrentLength * 0.002);
 				if (Result.endpos.IsValid() && EnterTrace.endpos.IsValid())
 				{
-					surfacedata_t* EnterSurfaceData = Interfaces::PhysProps->GetSurfaceData(EnterTrace.surface.surfaceProps);
-					surfacedata_t* ExitSurfaceData = Interfaces::PhysProps->GetSurfaceData(Result.surface.surfaceProps);
+					surfacedata_t* EnterSurfaceData = Interfaces::PhysProps()->GetSurfaceData(EnterTrace.surface.surfaceProps);
+					surfacedata_t* ExitSurfaceData = Interfaces::PhysProps()->GetSurfaceData(Result.surface.surfaceProps);
 					float Thickness = (EnterTrace.endpos - Result.endpos).Length();
 					if (AutoWall::HandleBulletPenetration(WpnData->m_flPenetration, EnterSurfaceData, ExitSurfaceData, Result, Thickness, PenetrationCount, Damage)) { break; }
 				}
