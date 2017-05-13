@@ -17,14 +17,14 @@ namespace SourceEngine
     IEngineTrace*       Interfaces::m_pEngineTrace = nullptr;
     ICvar*              Interfaces::m_pCVar = nullptr;
     IClientMode*        Interfaces::m_pClientMode = nullptr;
-	IPhysicsSurfaceProps*  Interfaces::m_pPhysProps = nullptr;
-	IPrediction*		Interfaces::m_pPrediction = nullptr;
-	IGameMovement*		Interfaces::m_pGameMovement = nullptr;
-	IGameEventManager2* Interfaces::m_pGameEventManager = nullptr;
-	IVModelInfo*		Interfaces::m_pModelInfo = nullptr;
-	IVModelRender*		Interfaces::m_pModelRender = nullptr;
-	IMaterialSystem*    Interfaces::m_pMaterialSystem = nullptr;
-	IVRenderView*		Interfaces::m_pRenderView = nullptr;
+    IPhysicsSurfaceProps*  Interfaces::m_pPhysProps = nullptr;
+    IPrediction*	Interfaces::m_pPrediction = nullptr;
+    IGameMovement*	Interfaces::m_pGameMovement = nullptr;
+    IGameEventManager2* Interfaces::m_pGameEventManager = nullptr;
+    IVModelInfo*	Interfaces::m_pModelInfo = nullptr;
+    IVModelRender*	Interfaces::m_pModelRender = nullptr;
+    IMaterialSystem*    Interfaces::m_pMaterialSystem = nullptr;
+    IVRenderView*	Interfaces::m_pRenderView = nullptr;
 
     CreateInterfaceFn GetFactory(HMODULE hMod)
     {
