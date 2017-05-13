@@ -247,13 +247,13 @@ public:
 	typedef bool(__fastcall* TraceToExit_t)(Vector&, trace_t&, float, float, float, float, float, float, trace_t*);
 	static bool TraceToExit(Vector& end, trace_t& tr, Vector start, Vector dir, trace_t* trace)
 	{
-		static TraceToExit_t TraceToExitF = (TraceToExit_t)Utils::FindSignature(XorStr("client.dll"), XorStr("55 8B EC 83 EC 2C F3 0F 10 75 ? 33 C0"));
+		static TraceToExit_t TraceToExitF = (TraceToExit_t)Utils::FindSignature(XorStr("client.dll"), XorStr("55 8B EC 83 EC 30 F3 0F 10 75"));
 		return TraceToExitF(end, tr, start.x, start.y, start.z, dir.x, dir.y, dir.z, trace);
 	}
 	typedef void(__fastcall* ClipTraceToPlayers_t)(const Vector&, const Vector&, unsigned int, ITraceFilter*, trace_t*);
 	static void ClipTraceToPlayers(const Vector& start, const Vector& end, unsigned int mask, ITraceFilter* filter, trace_t* tr)
 	{
-		static ClipTraceToPlayers_t ClipTraceToPlayersF = (ClipTraceToPlayers_t)Utils::FindSignature(XorStr("client.dll"), XorStr("53 8B DC 83 EC 08 83 E4 F0 83 C4 04 55 8B 6B 04 89 6C 24 04 8B EC 81 EC D8 ? ? ? 8B 43 10"));
+		static ClipTraceToPlayers_t ClipTraceToPlayersF = (ClipTraceToPlayers_t)Utils::FindSignature(XorStr("client.dll"), XorStr("53 8B DC 83 EC 08 83 E4 F0 83 C4 04 55 8B 6B 04 89 6C 24 04 8B EC 81 EC ? ? ? ? 8B 43 10"));
 		ClipTraceToPlayersF(start, end, mask, filter, tr);
 	}
 private:
