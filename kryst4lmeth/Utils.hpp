@@ -248,7 +248,21 @@ public:
 	static bool TraceToExit(Vector& end, trace_t& tr, Vector start, Vector dir, trace_t* trace)
 	{
 		static TraceToExit_t TraceToExitF = (TraceToExit_t)Utils::FindSignature(XorStr("client.dll"), XorStr("55 8B EC 83 EC 30 F3 0F 10 75"));
-		return TraceToExitF(end, tr, start.x, start.y, start.z, dir.x, dir.y, dir.z, trace);
+		if (!TraceToExitF) { return false; }
+		_asm
+		{
+			push trace
+			push dir.z
+			push dir.y
+			push dir.x
+			push start.z
+			push start.y
+			push start.x
+			mov edx, tr
+			mov ecx, end
+			call TraceToExitF
+			add esp, 0x1C
+		}
 	}
 	typedef void(__fastcall* ClipTraceToPlayers_t)(const Vector&, const Vector&, unsigned int, ITraceFilter*, trace_t*);
 	static void ClipTraceToPlayers(const Vector& start, const Vector& end, unsigned int mask, ITraceFilter* filter, trace_t* tr)
