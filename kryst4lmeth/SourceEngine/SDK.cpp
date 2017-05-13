@@ -80,9 +80,7 @@ namespace SourceEngine
     CGlobalVarsBase* Interfaces::GlobalVars()
     {
         if(!m_pGlobals) {
-            auto uAddress = Utils::FindSignature(XorStr("client.dll"), XorStr("A1 ? ? ? ? 5F 8B 40 10"));
-            uint32_t g_dwGlobalVarsBase = *(uint32_t*)(uAddress + 0x1);
-            m_pGlobals = *(CGlobalVarsBase**)(g_dwGlobalVarsBase);
+			m_pGlobals = **reinterpret_cast<CGlobalVarsBase***>((*(DWORD**)Client())[0] + 0x1B);
         }
         return m_pGlobals;
     }
@@ -125,7 +123,7 @@ namespace SourceEngine
     IClientMode* Interfaces::ClientMode()
     {
         if(!m_pClientMode) {
-            auto uAddress = *(DWORD*)(Utils::FindSignature(XorStr("client.dll"), XorStr("8B 35 ? ? ? ? 85 FF 74 73")) + 2);
+            auto uAddress = *(DWORD*)(Utils::FindSignature(XorStr("client.dll"), XorStr("8B 0D ? ? ? ? 8B 01 5D FF")) + 2);
             m_pClientMode = *(IClientMode**)(uAddress);
         }
         return m_pClientMode;
