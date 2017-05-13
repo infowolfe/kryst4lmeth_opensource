@@ -93,14 +93,12 @@ namespace DrawTools
 	void DrawFilledQuad(Vector2D p0, Vector2D p1, Vector2D p2, Vector2D p3, Color c)
 	{
 		Vertex_t verts[4];
-		static int Texture = Interfaces::MatSurface()->CreateNewTextureID(true); //need to make a texture with procedural true
-		byte buffer[4] = { (byte)c.r(), (byte)c.g(), (byte)c.b(), (byte)c.a() }; // R G B A (single pixel buffer layout.) 
-		Interfaces::MatSurface()->DrawSetTextureRGBA(Texture, buffer, 1, 1); //Texture, char array of texture, width, height
-		Interfaces::MatSurface()->DrawSetColor(255, 255, 255, 255); // keep this full color and opacity use the RGBA @top to set values.
-		Interfaces::MatSurface()->DrawSetTexture(Texture); // bind texture
-														   //FontVertex_t::Init() takes 2 vector2D params, the first is screenspace and the second 
-														   //is where in texture to draw from. default 0 so just pass a single vector2d param.
-														   //wb is my world2screen array for 3d box points
+		static int Texture = Interfaces::MatSurface()->CreateNewTextureID(true);
+		byte buffer[4] = { 255, 255, 255, 255 };
+		Interfaces::MatSurface()->DrawSetTextureRGBA(Texture, buffer, 1, 1);
+		Interfaces::MatSurface()->DrawSetColor((byte)c.r(), (byte)c.g(), (byte)c.b(), (byte)c.a());
+		Interfaces::MatSurface()->DrawSetTexture(Texture); 
+		
 		verts[0].Init(p0);
 		verts[1].Init(p1);
 		verts[2].Init(p2);
@@ -118,9 +116,9 @@ namespace DrawTools
 	{
 		Vertex_t verts[4];
 		static int Texture = Interfaces::MatSurface()->CreateNewTextureID(true);
-		byte buffer[4] = { (byte)c.r(), (byte)c.g(), (byte)c.b(), (byte)c.a() };
+		byte buffer[4] = { 255, 255, 255, 255 };
 		Interfaces::MatSurface()->DrawSetTextureRGBA(Texture, buffer, 1, 1);
-		Interfaces::MatSurface()->DrawSetColor(255, 255, 255, 255);
+		Interfaces::MatSurface()->DrawSetColor((byte)c.r(), (byte)c.g(), (byte)c.b(), (byte)c.a());
 		Interfaces::MatSurface()->DrawSetTexture(Texture);
 
 		verts[0].Init(p0);
