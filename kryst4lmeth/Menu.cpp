@@ -497,9 +497,9 @@ namespace Menu
 			{
 				if (!Children[c]->GetVisible()) continue;
 				// Subtract another 16 pixels because the items are top-left aligned
-				int BoxHeight = GetBounds().h - 16 - 16;
+				int BoxHeight = GetBounds().h - 16 - 24;
 				int Vol = GetAdaptiveVolume();
-				Children[c]->SetPosition(Vector2D(16, 16 + z * ((float)BoxHeight / Vol)));
+				Children[c]->SetPosition(Vector(16, 24 + z * ((float)BoxHeight / Vol) + 8, 0));
 				z++;
 			}
 			CBaseRenderable::Update();
@@ -578,18 +578,18 @@ namespace Menu
 				{
 					if (!Children[c]->GetVisible()) continue;
 					// Subtract another 16 pixels because the items are top-left aligned
-					int BoxHeight = GetBounds(0).h - 16 - 16;
+					int BoxHeight = GetBounds(0).h - 16 - 24;
 					int Vol = GetAdaptiveVolume(0);
-					Children[c]->SetPosition(Vector2D(16, 16 + z * ((float)BoxHeight / Vol)));
+					Children[c]->SetPosition(Vector(16, 24 + z * ((float)BoxHeight / Vol) + 8, 0));
 					z++;
 				}
 				else
 				{
 					if (!Children[c]->GetVisible()) continue;
 					// Subtract another 16 pixels because the items are top-left aligned
-					int BoxHeight = GetBounds(1).h - 16 - 16;
+					int BoxHeight = GetBounds(1).h - 16 - 24;
 					int Vol =  GetAdaptiveVolume(1);
-					Children[c]->SetPosition(Vector2D(16, 24 + GetBounds(1).h + z * ((float)BoxHeight / Vol)));
+					Children[c]->SetPosition(Vector(16, 24 + (GetBounds(1).h + 4) + z * ((float)BoxHeight / Vol) + 8, 0));
 					z++;
 				}
 				if (c == NumberOnTop - 1)
