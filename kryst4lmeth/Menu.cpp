@@ -1184,86 +1184,6 @@ namespace Menu
 		}
 	}
 
-	class Dot;
-	std::vector<Dot*> Dots;
-	class Dot : public CBaseRenderable
-	{
-	public:
-		Dot(Vector2D p, Vector2D v)
-		{
-			SetPosition(p, false);
-			Velocity = v;
-		}
-		virtual void Update()
-		{
-			SetPosition(GetPosition() + Velocity * (MenuAlpha / 255.0f));
-			CBaseRenderable::Update();
-		}
-		virtual void Draw()
-		{
-			DrawIntRect(IntRect{ (int)GetPosition().x - 2, (int)GetPosition().y - 2, 4, 4 }, Color(225, 225, 225, GetOpacity() / 8.0f));
-			auto t = std::find(Dots.begin(), Dots.end(), this);
-			if (t == Dots.end()) return;
-			for (auto i = t; i != Dots.end(); i++)
-			{
-				if ((*i) == this) continue;
-				Vector2D Pos = GetPosition();
-				float Dist = Pos.DistTo((*i)->GetPosition());
-				if (Dist < 128)
-				{
-					Vector2D Dir = ((*i)->GetPosition() - GetPosition()).Normalized();
-					Vector2D Right = Vector2D(Dir.y, -Dir.x);
-					DrawFilledQuadOneSided(Vector2D(Pos + Right), Vector2D(Pos + Right + Dir * Dist), Vector2D(Pos - Right + Dir * Dist), Vector2D(Pos - Right), Color(255, 255, 255, (MenuAlpha / 16.0f) * (1.0f - (Dist / 128.0f))));
-				}
-			}
-			CBaseRenderable::Draw();
-		}
-	protected:
-		float Rotation = 0;
-		float Size = 0;
-		Vector2D Velocity;
-	};
-
-	void DrawBackdrop()
-	{
-		int s = rand() % 24;
-
-		if (s == 0)
-			Dots.push_back(new Dot(Vector2D(rand() % (int)ScreenSize.x, -16), Vector2D((rand() % 7) - 3, rand() % 3 + 1)));
-		else if (s == 1)
-			Dots.push_back(new Dot(Vector2D(rand() % (int)ScreenSize.x, (int)ScreenSize.y + 16), Vector2D((rand() % 7) - 3, -1 * (rand() % 3 + 1))));
-		else if (s == 2)
-			Dots.push_back(new Dot(Vector2D(-16, rand() % (int)ScreenSize.y), Vector2D(rand() % 3 + 1, (rand() % 7) - 3)));
-		else if (s == 3)
-			Dots.push_back(new Dot(Vector2D((int)ScreenSize.x + 16, rand() % (int)ScreenSize.y), Vector2D(-1 * (rand() % 3 + 1), (rand() % 7) - 3)));
-
-		DrawIntRect(IntRect{ 0, 0, (int)ScreenSize.x, (int)ScreenSize.y }, Color(0, 0, 0, 225 * (MenuAlpha / 255.0f)));
-
-		for (auto i = Dots.begin(); i < Dots.end();)
-		{
-			if ((*i)->GetPosition().y < - 20 || (*i)->GetPosition().y > ScreenSize.y + 20 || (*i)->GetPosition().x < -20 || (*i)->GetPosition().x > ScreenSize.x + 20)
-			{
-				delete (*i);
-				i = Dots.erase(i);
-			}
-			else
-			{
-				(*i)->SetOpacity(MenuAlpha);
-				(*i)->Update();
-				i++;
-			}
-		}
-		for (auto i = Dots.begin(); i < Dots.end(); i++)
-			(*i)->Draw();
-	}
-
-	void DestroyBackdrop()
-	{
-		for (auto i = Dots.begin(); i < Dots.end(); i++)
-			delete (*i);
-		Dots.clear();
-	}
-
 	void Render()
 	{
 		static DWORD InsertKeyState = false;
@@ -1305,8 +1225,6 @@ namespace Menu
 			MouseState = CurrentMouseInput;
 			IsMouseDown = MouseState;
 
-			DrawBackdrop();
-
 			// Reverse iteration update cause reasons.
 			for (int i = BaseObjects.size() - 1; i >= 0; i--)
 			{
@@ -1329,7 +1247,5 @@ namespace Menu
 		for (auto i = BaseObjects.begin(); i != BaseObjects.end(); i++)
 			delete (*i);
 		BaseObjects.clear();
-
-		DestroyBackdrop();
 	}
 }

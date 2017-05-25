@@ -43,9 +43,11 @@ namespace Hooks
 
     void Initialize()
     {
-		//AllocConsole();
-		//AttachConsole(GetCurrentProcessId());
-		//freopen("CON", "w", stdout);
+		/*
+		AllocConsole();
+		AttachConsole(GetCurrentProcessId());
+		freopen("CON", "w", stdout);
+		*/
 
         //Builds the netvar database
         NetvarManager::Instance()->CreateDatabase();
@@ -357,6 +359,9 @@ namespace Hooks
 	}
 	void __stdcall Hooked_PaintTraverse(VPANEL Panel, bool allowForce, bool forceRepaint)
 	{
+		if (!strcmp("HudZoom", Interfaces::VGUIPanel()->GetName(Panel)))
+			return;
+
 		g_pPanelHook->GetOriginal<PaintTraverse_t>(41)(Interfaces::VGUIPanel(), Panel, allowForce, forceRepaint);
 
 		static unsigned int overlayPanel;
@@ -376,6 +381,14 @@ namespace Hooks
 				auto pEntity = static_cast<C_CSPlayer*>(SourceEngine::Interfaces::EntityList()->GetClientEntity(i));
 				if (!pEntity) continue;
 				if (!pEntity->IsAlive() || pEntity->IsDormant()) continue;
+				if (C_CSPlayer::GetLocalPlayer()->IsScoped())
+				{
+					int W, H;
+					Interfaces::Engine()->GetScreenSize(W, H);
+					Interfaces::MatSurface()->DrawSetColor(Color(255, 0, 0, 255));
+					Interfaces::MatSurface()->DrawLine(W / 2, 0, W / 2, H);
+					Interfaces::MatSurface()->DrawLine(0, H / 2, W, H / 2);
+				}
 				if (pEntity->GetClientClass()->m_ClassID == SourceEngine::EClassIds::CCSPlayer)
 				{
 					EntityESP esp(pEntity);
@@ -388,6 +401,7 @@ namespace Hooks
 						esp.RenderName();
 					if (Config.g_bESPShowWeaponNames)
 						esp.RenderWeaponName();
+
 				}
 			}
 		}
